@@ -186,7 +186,6 @@ class FlywheelEventStoreAdapterTest extends TestCase
         $stream = $this->createStream();
         $this->adapter->create($stream);
 
-        sleep(1);
         $since = new \DateTime('now', new \DateTimeZone('UTC'));
 
         // Append new event
@@ -218,8 +217,6 @@ class FlywheelEventStoreAdapterTest extends TestCase
         $newEvent1 = UsernameChanged::with(['name' => 'John Doe'], 2)->withAddedMetadata('tag', 'person');
         $this->adapter->appendTo(new StreamName('user_stream'), new \ArrayIterator([$newEvent1]));
 
-        sleep(1);
-
         // Append new event for different aggragate
         $newEvent2 = UserCreated::with(['name' => 'Jane Doe', 'email' => 'jane@acme.com'], 1)->withAddedMetadata('tag', 'person');
         $this->adapter->appendTo(new StreamName('user_stream'), new \ArrayIterator([$newEvent2]));
@@ -246,9 +243,10 @@ class FlywheelEventStoreAdapterTest extends TestCase
      */
     private function createStream()
     {
-        $streamEvent = UserCreated::with(
+        $streamEvent = UserCreated::withPayloadAndSpecifiedCreatedAt(
             ['name' => 'Max Mustermann', 'email' => 'contact@prooph.de'],
-            1
+            1,
+            new \DateTimeImmutable('30 seconds ago')
         );
 
         $streamEvent = $streamEvent->withAddedMetadata('tag', 'person');
