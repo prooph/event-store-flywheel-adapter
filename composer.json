@@ -1,0 +1,50 @@
+{
+    "name": "prooph/event-store-flywheel-adapter",
+    "description": "Flywheel Adapter for ProophEventStore",
+    "type": "library",
+    "homepage": "http://getprooph.org/",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Matthieu Moquet",
+            "email": "matthieu@moquet.net"
+        },
+        {
+            "name": "Alexander Miertsch",
+            "email": "contact@prooph.de",
+            "homepage": "http://www.prooph.de"
+        },
+        {
+            "name": "Sascha-Oliver Prolic",
+            "email": "saschaprolic@googlemail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Prooph\\EventStore\\Adapter\\Flywheel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ProophTest\\EventStore\\Adapter\\Flywheel\\": "tests/",
+            "ProophTest\\EventStore\\": "vendor/prooph/event-store/tests/"
+        }
+    },
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "jamesmoss/flywheel": "^0.4.2",
+        "prooph/common": "^3.5",
+        "prooph/event-store": "^6.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "^1.10",
+        "phpunit/phpunit": "^4.8 || ^5.2"
+    },
+    "scripts": {
+        "lint": "php-cs-fixer fix --ansi",
+        "test": "phpunit --colors=always"
+    },
+    "config": {
+        "process-timeout": 0
+    }
+}
