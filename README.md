@@ -1,6 +1,7 @@
 # Flywheel Adapter for ProophEventStore
 
 [![Build Status](https://travis-ci.org/prooph/event-store-flywheel-adapter.svg?branch=master)](https://travis-ci.org/prooph/event-store-flywheel-adapter)
+[![Coverage Status](https://coveralls.io/repos/github/prooph/event-store-flywheel-adapter/badge.svg?branch=master)](https://coveralls.io/github/prooph/event-store-flywheel-adapter?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/prooph/improoph)
 
 Use [Prooph Event Store](https://github.com/prooph/event-store)
@@ -50,7 +51,7 @@ Here is an example of a created JSON file:
 
 ## Support
 
-- File issues at [https://github.com/prooph/event-store/issues](https://github.com/prooph/event-store/issues).
+- File issues at [https://github.com/prooph/event-store-flywheel-adapter/issues](https://github.com/prooph/event-store-flywheel-adapter/issues).
 - Say hello in the [prooph gitter](https://gitter.im/prooph/improoph) chat.
 
 ## Contribute
