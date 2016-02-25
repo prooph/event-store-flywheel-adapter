@@ -72,14 +72,18 @@ class FlywheelEventStoreAdapterTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_a_stream()
+    public function it_creates_and_load_a_stream()
     {
         // Create stream
         $stream = $this->createStream();
         $this->adapter->create($stream);
 
-        // Load events
-        $events = $this->adapter->loadEvents(new StreamName('user_stream'), ['tag' => 'person']);
+        // Load stream
+        $stream = $this->adapter->load(new StreamName('user_stream'));
+        $events = $stream->streamEvents();
+
+        // Assertion on the stream
+        $this->assertEquals('user_stream', $stream->streamName()->toString());
         $this->assertCount(1, $events);
 
         // Assertion on the event
