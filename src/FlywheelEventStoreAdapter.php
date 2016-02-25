@@ -27,10 +27,26 @@ use Prooph\EventStore\Stream\StreamName;
 
 final class FlywheelEventStoreAdapter implements Adapter
 {
+    /**
+     * @var string
+     */
     private $rootDir;
+
+    /**
+     * @var MessageFactory
+     */
     private $messageFactory;
+
+    /**
+     * @var MessageConverter
+     */
     private $messageConverter;
 
+    /**
+     * @param string           $rootDir          The root directory to store the event files
+     * @param MessageFactory   $messageFactory   To create message from array
+     * @param MessageConverter $messageConverter To convert message into array
+     */
     public function __construct($rootDir, MessageFactory $messageFactory, MessageConverter $messageConverter)
     {
         $this->rootDir = $rootDir;
@@ -38,11 +54,18 @@ final class FlywheelEventStoreAdapter implements Adapter
         $this->messageConverter = $messageConverter;
     }
 
+    /**
+     * @param Stream $stream
+     */
     public function create(Stream $stream)
     {
         $this->appendTo($stream->streamName(), $stream->streamEvents());
     }
 
+    /**
+     * @param StreamName $streamName
+     * @param Iterator   $domainEvents
+     */
     public function appendTo(StreamName $streamName, Iterator $streamEvents)
     {
         foreach ($streamEvents as $event) {
@@ -50,6 +73,12 @@ final class FlywheelEventStoreAdapter implements Adapter
         }
     }
 
+    /**
+     * @param StreamName $streamName
+     * @param null|int   $minVersion Minimum version an event should have
+     *
+     * @return Stream
+     */
     public function load(StreamName $streamName, $minVersion = null)
     {
         $events = $this->loadEvents($streamName, [], $minVersion);
@@ -57,6 +86,13 @@ final class FlywheelEventStoreAdapter implements Adapter
         return new Stream($streamName, $events);
     }
 
+    /**
+     * @param StreamName $streamName
+     * @param array      $metadata   If empty array is provided, then all events should be returned
+     * @param null|int   $minVersion Minimum version an event should have
+     *
+     * @return ArrayIterator
+     */
     public function loadEvents(StreamName $streamName, array $metadata = [], $minVersion = null)
     {
         $repository = $this->getRepositoryForStream($streamName);
@@ -83,6 +119,13 @@ final class FlywheelEventStoreAdapter implements Adapter
         return new ArrayIterator($events);
     }
 
+    /**
+     * @param StreamName             $streamName
+     * @param DateTimeInterface|null $since
+     * @param array                  $metadata
+     *
+     * @return Iterator
+     */
     public function replay(StreamName $streamName, DateTimeInterface $since = null, array $metadata = [])
     {
         $repository = $this->getRepositoryForStream($streamName);
@@ -111,6 +154,10 @@ final class FlywheelEventStoreAdapter implements Adapter
         return new ArrayIterator($events);
     }
 
+    /**
+     * @param StreamName $streamName
+     * @param Message    $event
+     */
     private function insertEvent(StreamName $streamName, Message $event)
     {
         $repository = $this->getRepositoryForStream($streamName);
@@ -119,6 +166,11 @@ final class FlywheelEventStoreAdapter implements Adapter
         $repository->store($document);
     }
 
+    /**
+     * @param Message $event
+     *
+     * @return Document
+     */
     private function convertEventToDocument(Message $event)
     {
         $eventArr = $this->messageConverter->convertToArray($event);
@@ -140,6 +192,11 @@ final class FlywheelEventStoreAdapter implements Adapter
         return $document;
     }
 
+    /**
+     * @param Document $document
+     *
+     * @return Message
+     */
     private function convertDocumentToEvent(Document $document)
     {
         $createdAt = \DateTimeImmutable::createFromFormat(
@@ -157,6 +214,11 @@ final class FlywheelEventStoreAdapter implements Adapter
         ]);
     }
 
+    /**
+     * @param StreamName $streamName
+     *
+     * @return Repository
+     */
     private function getRepositoryForStream(StreamName $streamName)
     {
         return new Repository($streamName->toString(), new Config($this->rootDir));
