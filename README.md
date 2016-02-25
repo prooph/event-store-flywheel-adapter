@@ -50,7 +50,7 @@ Here is an example of a created JSON file:
 
 ## Support
 
-- File issues at [https://github.com/prooph/event-store/issues](https://github.com/prooph/event-store/issues).
+- File issues at [https://github.com/prooph/event-store-flywheel-adapter/issues](https://github.com/prooph/event-store-flywheel-adapter/issues).
 - Say hello in the [prooph gitter](https://gitter.im/prooph/improoph) chat.
 
 ## Contribute
