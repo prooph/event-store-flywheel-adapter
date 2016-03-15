@@ -34,7 +34,7 @@ class FlywheelEventStoreAdapterTest extends TestCase
 
     protected function setUp()
     {
-        $this->rootDir = sys_get_temp_dir().'/FlywheelEventStoreAdapterTest_'.rand();
+        $this->rootDir = sys_get_temp_dir().'/FlywheelEventStoreAdapterTest_'.mt_rand();
 
         if (!is_dir($this->rootDir) && !@mkdir($this->rootDir)) {
             throw new \RuntimeException('Unable to create the temporary root directory');
