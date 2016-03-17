@@ -246,7 +246,7 @@ class FlywheelEventStoreAdapterTest extends TestCase
         $streamEvent = UserCreated::withPayloadAndSpecifiedCreatedAt(
             ['name' => 'Max Mustermann', 'email' => 'contact@prooph.de'],
             1,
-            new \DateTimeImmutable('30 seconds ago')
+            new \DateTimeImmutable('30 seconds ago', new \DateTimeZone('UTC'))
         );
 
         $streamEvent = $streamEvent->withAddedMetadata('tag', 'person');
