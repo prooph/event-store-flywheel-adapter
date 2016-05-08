@@ -34,7 +34,7 @@ class FlywheelEventStoreAdapterTest extends TestCase
 
     protected function setUp()
     {
-        $this->rootDir = sys_get_temp_dir().'/FlywheelEventStoreAdapterTest_'.rand();
+        $this->rootDir = sys_get_temp_dir().'/FlywheelEventStoreAdapterTest_'.mt_rand();
 
         if (!is_dir($this->rootDir) && !@mkdir($this->rootDir)) {
             throw new \RuntimeException('Unable to create the temporary root directory');
@@ -246,7 +246,7 @@ class FlywheelEventStoreAdapterTest extends TestCase
         $streamEvent = UserCreated::withPayloadAndSpecifiedCreatedAt(
             ['name' => 'Max Mustermann', 'email' => 'contact@prooph.de'],
             1,
-            new \DateTimeImmutable('30 seconds ago')
+            new \DateTimeImmutable('30 seconds ago', new \DateTimeZone('UTC'))
         );
 
         $streamEvent = $streamEvent->withAddedMetadata('tag', 'person');
